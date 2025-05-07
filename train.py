@@ -49,7 +49,7 @@ def create_model():
     
     model.compile(
         optimizer=tf.keras.optimizers.Adam(learning_rate=0.0001),
-        loss='categorical_crossentropy',
+        loss='sparse_categorical_crossentropy',
         metrics=['accuracy']
     )
     return model
@@ -59,7 +59,9 @@ def main():
     train_ds = tf.keras.utils.image_dataset_from_directory(
         'split_data/train',
         image_size=IMG_SIZE,
-        batch_size=BATCH_SIZE
+        batch_size=BATCH_SIZE,
+        label_mode='int'  # Should match sparse_categorical setup
+
     )
     
     val_ds = tf.keras.utils.image_dataset_from_directory(
